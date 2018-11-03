@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+        
+
+<link  id="hostStyle" rel="stylesheet" href="css/styles.css"/>
+
+<title>Layer Maneger</title>
+</head>
+
+<body class="hostElt">
+
+    <div id="content">     
+		<h1>Layer Manager</h1>
+		<h3>layer list</h3>
+        <form name="layers">
+        	<ul id="layer_list">
+			</ul>  
+			<input type="button" id="all_off" value="all check off">
+			<input type="button" id="all_on" value="all check on">
+		</form>
+		
+		<!--
+		<form name="options">
+			<ul id="layer_type">
+				<li><input type="checkbox" name="solid"></li>
+				<li><input type="checkbox" name=""></li>
+			</ul>
+		</form>
+        -->
+		
+		<h3>action</h3>
+		<form name="action">
+			<input type="button" name="load_action" id="load_action" value="load">
+			<select name="set_list" id="setlist"></select>
+			<select name="child_list" id="child_list"></select>
+		</form>
+		
+		<form name="process">
+			<select name="select_type">
+				<option value="action">action</option>
+				<option value="smart_on">convert smartlayer</option>
+				<option value="smart_off">rastrize smartlayer</option>
+				<option value="show_lay">show layer</option>
+				<option value="hide_lay">hide layer</option>
+			</select>
+		</form>
+		<input type="button" id="done" value="done">
+    </div>
+    
+    <!-- These are debugging shortcuts.  Class debuglink items only appear in debug mode  -->
+    <span class="debuglink" id="reload">Reload</span>
+    <span class="debuglink" id="debug">Debug</span>
+    <span class="debuglink" id="sources">Sources</span>
+    
+    <script src="js/libs/CSInterface.js"></script>
+    <script src="js/libs/jquery-2.0.2.min.js"></script>
+
+    <script src="js/themeManager.js"></script>
+	<script src="js/prevent_draganddrop.js"></script>
+    <script src="js/main.js"></script>
+
+        
+</body>
+</html>
