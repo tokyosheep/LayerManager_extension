@@ -5,8 +5,175 @@
         
 
 <link  id="hostStyle" rel="stylesheet" href="css/styles.css"/>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet"> 
 
 <title>Layer Maneger</title>
+	
+	<style>
+		
+		h2 , h3 , input[type="button"],select{
+			font-size: 15px;
+		}
+		
+		input[type="button"],select{
+			font-family: 'Open Sans Condensed', sans-serif;
+		}
+		
+		h1{
+			font-size: 20px;
+			/*background:linear-gradient(to right,rgba(34, 34, 34, 0),#f7226c);*/ 
+		}
+		
+		h2, h3 {
+			font-size: 18px;
+			color: #858def;
+		}
+		
+		h3{
+			margin-bottom: 5px;
+		}
+		
+		#rorate{
+			display: block;
+			margin-bottom: 10px;
+		}
+		
+		.move{
+			display: block;
+		}
+		
+		form ul{
+			background-color: #27271e;
+			padding: 10px 0px;
+			margin: 20px 0px;
+			border-radius: 10px;
+		}
+		
+		li{
+			list-style: none;
+			margin: 10px 0px;
+			margin-left: 10px;
+		}
+		
+		#layer_list ul{
+			margin: 0px;
+			padding: 0px;
+		}
+		
+		/*=====================layer system===================*/
+		
+		input[type="checkbox"]{
+			display: none;
+		}
+		
+		.layer_box{
+			background-color: #36322d;
+			color: black;
+		}
+		
+		input[type="checkbox"]:checked + span {
+			background-color: #e5753a;
+			color: white;
+		}
+		
+		.folder:checked + .layer_box{
+			background-color: #c3b731;
+		}
+		
+		.text:checked + .layer_box{
+			background-color: #708668;
+		}
+		
+		.adjust:checked + .layer_box{
+			background-color: #2a3589;
+		}
+		
+		.smart:checked + .layer_box{
+			background-color: #666667;
+		}
+		
+		.fillout:checked + .layer_box{
+			background-color: #818169;
+		}
+		
+		.layer_box{
+			border: solid 1px white;
+			border-radius: 3px;
+			padding: 3px  15px;
+		}
+		
+		.layer_name{
+			display: inline-block;
+			margin-left: 3px;
+		}
+		
+		input[type="checkbox"]:disabled + .layer_box{
+			background-color: #36322d;
+			color: black;
+		}
+		
+		
+		
+		/*=====================================================*/
+		
+		input[type="button"]{
+			font-size: 13px;
+			border: solid 0px;
+			padding: 3px 0px;
+			margin: 5px 0px;
+			border-radius: 7px;
+			background-color: #696765;
+			color: white;
+			width: 100%;
+		}
+		
+		#done{
+			background-color: #ef9f33;
+			border: solid 1px #ef9f33;
+		}
+		
+		#load_action{
+			background-color: #484848;
+			border: solid 1px #3a3a8e;
+		}
+		
+		select{
+			width: 100%;
+			margin: 5px 0px;
+			background-color: #221f1d;
+			color: white;
+			font-size: 13px;
+			border-color: #3a3a8e;
+		}
+		
+		#select_type{
+			border-color: #ff8900;
+		}
+		
+		input[type="number"]{
+			background-color: rgba(0,0,0,0);
+			border: none;
+			border-bottom: solid 1px white;
+			color: white;
+			width: 50px;
+		}
+		
+		.position{
+			display: inline-block;
+			width: 65px;
+			height: 18px;
+			margin-right: 5px;
+			font-size: 14px;
+			border-bottom: solid 1px white;
+		}
+		
+		form[name="object_move"]{
+			background-color: #212024;
+			border-radius: 5px;
+			padding: 8px;
+		}
+		
+	</style>
 </head>
 
 <body class="hostElt">
@@ -14,7 +181,7 @@
     <div id="content">     
 		<h1>Layer Manager</h1>
 		<h3>layer list</h3>
-        <form name="layers">
+        <form name="layers" >
         	<ul id="layer_list">
 			</ul>  
 			<input type="button" id="all_off" value="all check off">
@@ -38,15 +205,25 @@
 		</form>
 		
 		<form name="process">
-			<select name="select_type">
+			<select name="select_type" id="select_type">
 				<option value="action">action</option>
 				<option value="smart_on">convert smartlayer</option>
 				<option value="smart_off">rastrize smartlayer</option>
 				<option value="show_lay">show layer</option>
 				<option value="hide_lay">hide layer</option>
+				<option value="rotate">rotate</option>
+				<option value="move">move</option>
 			</select>
 		</form>
 		<input type="button" id="done" value="done">
+		
+		<form name="object_move">
+			<h3>rotate</h3>
+			<label id="rorate"><span class="position">rotate</span><input type="number" max="360" min="-360" step="1" name="rotate" value="0"></label>
+			<h3>move</h3>
+			<label class="move"><span class="position">vertical</span><input type="number" name="vertical" value="0"></label>
+			<label class="move"><span class="position">horizontal</span><input type="number" name="horizontal" value="0"></label>
+		</form>
     </div>
     
     <!-- These are debugging shortcuts.  Class debuglink items only appear in debug mode  -->

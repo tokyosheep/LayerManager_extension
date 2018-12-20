@@ -14,6 +14,9 @@ function get_layer(){
                 this.type = [];
                 this.name = [];
                 this.folders = [];
+                if(doc === undefined || !doc){
+                        return;
+                }
                 for(var i = 0; i<doc.layers.length;i++){
                         this.name[i] = doc.layers[i].name;
                         this.type[i] = isFolder(String(doc.layers[i].kind));//元々objct型なのでstring型に変換
@@ -26,6 +29,8 @@ function get_layer(){
                         }
                 }
         }
+        
+    
     var layers = new Get_layers (activeDocument);     
     //$.write(layers.folders);
     return JSON.stringify(layers);
