@@ -1,5 +1,12 @@
+const path = require("path");
+const MODE = "development";
+
+const nodeExternals = require("webpack-node-externals");
+
 module.exports = {
-    mode: "development",
+    target:"node",
+    externals:[nodeExternals()],
+    mode: MODE,
     
     entry: "./js/main.js",
     
@@ -22,6 +29,34 @@ module.exports = {
                 }
             }
         ]
+        },{
+            test: /\.css|.scss/,
+            use:[
+                "style-loader",
+                {
+                    loader:"css-loader",
+                    options:{
+                        url:false,
+                        sourceMap:true,
+                        importLoaders:2
+                    }
+                },{
+                    loader:"postcss-loader",
+                    options:{
+                        sourceMap: true,
+                        pluguins:[
+                            require("autoprefixer")({
+                                grid:true
+                            })
+                        ]
+                    }
+                },{
+                    loader:"sass-loader",
+                    options:{
+                        sourceMap:true,
+                    }
+                }
+            ]
         }
         ]
     }
