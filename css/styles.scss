@@ -1,0 +1,329 @@
+body{
+    color: #fff;
+    background: linear-gradient(#051445,#020419);
+}
+
+li{
+    list-style: none;
+}
+
+ul{
+    list-style: none;
+    padding: 0px;
+}
+
+h1{
+    font-family: "courier";
+    text-align: center;
+    color: #177098;
+}
+
+h2{
+    margin-top: 0px;
+    color: #71bfe2;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+input[type="checkbox"]{
+    display: none;
+}
+
+@mixin headline_font($size){
+    font-family: "courier";
+    text-align: center;
+    font-size: $size;
+}
+
+
+
+@mixin button_color($col01:#290dff,$col02:#0d61ff,$deg:0deg){
+    background: linear-gradient($deg,$col01,$col02);
+    font-family: "courier";
+    width: 100%;
+    height: 30px;
+    border: none;
+    color: #fff;
+    font-size: 15px;
+}
+
+@mixin selector(){
+    border: solid 1px white;
+    color: #fff;
+    background: rgba(0,0,0,1);
+    border-radius: 0;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+@mixin trans_wall($opacity_a:0,$opacity_b:0.2){
+    background: linear-gradient(rgba(255,255,255,$opacity_a),rgba(255,255,255,$opacity_b));
+}
+
+select{
+    @include selector();
+}
+
+
+
+/*=====================layer system===================*/
+		$font_layer:10px;
+
+@mixin layer_color($_color){
+    &:checked + .layer_box{
+        background: $_color;
+    }
+}
+
+.panels__listframe{
+    overflow: scroll;
+    height: 500px;
+}
+
+
+#layer_list{
+    //@include trans_wall();
+    position: relative;
+    z-index: 5;
+    margin: 0px;
+    padding: 0px;
+    width: 150%;
+    height: auto;
+    @include trans_wall();
+    
+        ul{
+            margin: 5px 0;
+        }
+   
+        li{
+            margin-left: 10px; 
+            margin-right: 10px;
+        }
+
+		.layer_box{
+			background-color: #36322d;
+			color: black;
+            font-size: $font_layer;
+            border: solid 1px white;
+			border-radius: 3px;
+			padding: 3px  15px;
+            width: auto;
+            display: inline-block;
+		}
+        
+        strong{
+            color: #ededed;
+            font-family: Arial;
+        }
+		
+		input[type="checkbox"]:checked + span {
+			background-color: #e5753a;
+			color: white;
+		}
+		
+		.folder{
+            @include layer_color(#c3b731);
+		}
+		
+		.text{
+            @include layer_color(#708668);
+		}
+		
+		.adjust{
+            @include layer_color(#2a3589);
+		}
+		
+		.smart{
+            @include layer_color(#666667);
+		}
+		
+		.fillout{
+            @include layer_color(#818169);
+		}
+        .boxes{
+            display: block;
+            width: auto;
+        }
+		
+		.layer_name{
+			display: inline-block;
+			margin-left: 3px;
+            font-size: $font_layer;
+		}
+		
+		input[type="checkbox"]:disabled + .layer_box{
+			background-color: #36322d;
+			color: black;
+		}
+}		
+/*===========================*/
+@mixin on_off_btn(){
+    background: #444;
+    color: #fff;
+    border-radius: 5px;
+    border-color: #fff;
+}
+
+
+#container{
+    display: flex;
+    justify-content: flex-start;
+    .panels{
+        width: 250px;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    #Layers_panel{
+        form{
+            input[type="button"]{
+                @include on_off_btn();
+            }
+        }
+    }
+}
+
+
+
+#options_panel{
+    #done{
+        @include button_color(#ff5c06,#ffc70d);
+    }
+    form{
+        @include trans_wall();
+        padding: 5px;
+        box-sizing: border-box;
+        font-size: 13px;
+        #load_action{
+            @include button_color();
+            margin-bottom: 20px;
+        }
+        label{
+            .position{
+                display: inline-block;
+                width: 70px;
+            }
+            input[type="number"]{
+                margin-bottom: 5px;
+            }
+        }
+    }
+}
+
+
+$font_check:12px;
+@mixin trans_box(){
+    & input[type="checkbox"] + div{
+        font-size: $font_check;
+        background: linear-gradient(45deg,rgba(255,255,255,0.3),rgba(255,255,255,0));
+        padding: 5px 10px;
+        margin-bottom: 10px;
+        text-align: center;
+        transition-duration: 0.5s;
+        position: relative;
+        z-index: 5;
+    }
+    
+    /*
+    & input[type="checkbox"]:checked + div{
+        background: linear-gradient(45deg,rgba(255,255,255,0.5),rgba(255,255,255,0.2));
+    } グラデーションのアニメーションはできないのでopacityと擬似要素で擬似的にアニメーション
+    */
+    & input[type="checkbox"] + div::before{
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: white;
+        transition-duration: 0.5s;
+        opacity: 0;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+    
+     & input[type="checkbox"]:checked + div::before{
+        opacity: 0.2;
+    } 
+    
+    & input[type="checkbox"] + div:hover{
+        cursor: pointer;
+    }
+}
+
+
+@mixin formats_face(){
+    & + div{
+        border: solid 1px #1cff51;
+        font-size: $font_check;
+        border-radius: 5px;
+        padding: 0px 7px;
+        background: rgba(255,255,255,0);
+        cursor: pointer;
+        transition-duration: 0.2s;
+    }
+    &:checked + div{
+        background: rgba(255,255,255,0.3);
+    }
+}
+
+
+
+.formats{
+        display: flex;
+        justify-content: space-between;
+        li{
+            label{
+                input[type="checkbox"]{
+                    @include formats_face();
+                }
+            }
+            
+        }
+}
+
+.condition{
+    li{
+        label{
+            @include trans_box();
+        }
+    }
+}
+
+@mixin fill_number(){
+    background: rgba(0,0,0,0);
+    color: #fff;
+    border: none;
+    border-bottom: solid 1px white;
+    width: 50px;
+    margin-left: 10px;
+    
+    &:disabled{
+        background: rgba(0,0,0,0.3);
+        color: #888;
+    }
+}
+
+table{
+    font-size: 12px;
+    tr{
+        td{
+            
+        }
+        th{
+            label{
+                @include trans_box();
+            }
+        }
+    }
+}
+
+input[type="number"]{
+    @include fill_number();
+}
+
+#save_images{
+    @include button_color();
+}
+		
+
+		

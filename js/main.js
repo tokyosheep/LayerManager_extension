@@ -1,15 +1,21 @@
 /*jslint vars: true, plusplus: true, devel: true, nomen: true, regexp: true, indent: 4, maxerr: 50 */
 /*global $, window, location, CSInterface, SystemPath, themeManager*/
+import "../css/bar_design.scss";
+import "../css/styles.scss";
+import "@babel/polyfill";
+import {prevent_drag_event} from "./import/prevent_draganddrop.js";
 
 window.onload = function(){
     'use strict';
 
     const csInterface = new CSInterface();
+    const fs = require(`fs`);
 	const dir_home = process.env[process.platform == `win32` ? `USERPROFILE` : `HOME`];
     const dir_desktop = require(`path`).join(dir_home, `Desktop`);//デスクトップパス
 	const extensionId = csInterface.getExtensionID(); 
     const filePath = csInterface.getSystemPath(SystemPath.EXTENSION) +`/js/`;
     const extensionRoot = csInterface.getSystemPath(SystemPath.EXTENSION) +`/jsx/`;
+    const json_path = filePath + `preset.json`;//デバッグ用
 	const layer_list = document.getElementById(`layer_list`);
 	const get_layers = `get_layers.jsx`;
 	const GetAction = `GetAction.jsx`;
@@ -28,11 +34,15 @@ window.onload = function(){
 	const form_pros = document.forms.process;
 	const form_act = document.forms.action;
 	const object_move = document.forms.object_move;
+    
+    const Resize = document.getElementById(`Resize`);
+    const size_value = document.getElementById(`size_value`);
+    const res_value = document.getElementById(`res_value`);
+    const jpg_quality = document.getElementById(`jpg_quality`);
 	
 	loadJSX(`json2.js`); 
 	
     prevent_drag_event();
- 	themeManager.init();
  	make_layer_list();
 	function loadJSX (fileName) {
         console.log(extensionRoot + fileName);
@@ -57,7 +67,27 @@ window.onload = function(){
 			
 			layer_list.innerHTML = write_list(layers);
 			const dis_event = new Layer_list_event();
-			
+            layer_list.style.height = ``;//レイヤーリストの高さを一度初期値（height）にリセット
+            const list_height = parseFloat(document.defaultView.getComputedStyle(layer_list).height);
+            
+            
+            //autoの値は一度具体的な数値に変換しないといけないのでgetComputedで取得
+            console.log(list_height);
+			if(list_height<500){//高さ500以下だったら500pxに直す
+                layer_list.style.height = `500px`;
+            }
+            /*
+            const list_width = parseFloat(document.defaultView.getComputedStyle(layer_list).width);
+            const layer_box = Array.from(document.getElementsByClassName(`boxes`));
+            layer_box.forEach(v=>{
+                console.log(document.defaultView.getComputedStyle(v).width);
+                console.log(v);
+                const box_width = parseFloat(document.defaultView.getComputedStyle(v).width);
+                if(layer_box < box_width){
+                    layer_box.style.width = box_width; 
+                }
+            });
+            */
 			function write_list(obj){
 				let list = ``;
 				obj.name.forEach((v,i)=>{
@@ -70,7 +100,7 @@ window.onload = function(){
 					*/
 					switch(obj.type[i]){
 						case `folder`:
-							branch +=`<ul>${write_list(obj.folders[i])}</ul>`;
+							branch +=`<ul>${write_list(obj.folders[i])}</ul>`;//再帰的処理
 							layer_kind = `folder`;	
 							break;
 							
@@ -96,23 +126,18 @@ window.onload = function(){
 							break;
 							
 						   }
-					list += `<li><label><input type="checkbox" name="one_of_layer" class="${layer_kind}" checked><span class="layer_box" data-type="${obj.type[i]}">${v}</span>
+                    /*
+					list += `<li class="boxes"><label><input type="checkbox" name="one_of_layer" class="${layer_kind}" checked><span class="layer_box" data-type="${obj.type[i]}">${v}</span>
 					<span class="layer_name">${layer_kind}</span></label>${branch}</li>`
+                    */
+                    list += `<li class="boxes"><label><input type="checkbox" name="one_of_layer" class="${layer_kind}" checked><span class="layer_box" data-type="${obj.type[i]}">${v}<strong>::${layer_kind}</strong></span>
+					</label>${branch}</li>`
 				});
 				return list;
 			}
 			
 			
-			/*
-			layers.name.forEach((v,i)=>{
-				
-				list += `<li><label><input type="checkbox" name="one_of_layer"><span class="layer_box" data-type="${layers.type[i]}">${v}</span></label></li>`
-			});
-			layer_list.innerHTML = list;
-			Array.from(document.getElementsByClassName(`layer_box`)).forEach((v,i)=>{
-				v.setAttribute(`type`,layers.type[i]);
-			});
-			console.log(document.getElementsByClassName(`layer_box`));*/
+			
 		});
 	}
 	
@@ -229,9 +254,7 @@ window.onload = function(){
 	
 	const ch_set = new Child_set();
 	/*=====================================action================================*/
-	
-	done.addEventListener(`click`,(e)=>{
-		class Sent_jsx{
+	class Sent_jsx{
 			constructor(){
 				this.prop = {};
 				this.prop.pros_type = form_pros.select_type.value;
@@ -280,7 +303,9 @@ window.onload = function(){
 				return layers_list;
 			}
 		}
-		
+    
+    
+	done.addEventListener(`click`,(e)=>{
 		const event = new CSEvent();
 		const PhotoshopCallbackUnique = make_layer_list;
 		csInterface.removeEventListener(`com.adobe.PhotoshopJSONCallback`+extensionId,PhotoshopCallbackUnique);
@@ -289,4 +314,93 @@ window.onload = function(){
 		console.log(to_jsx);
 		to_jsx.connect_jsx();
 	},false);
+    
+    /*===================save option=================*/
+    
+    class Disable{
+        constructor(btn,elm){
+            this.btn = btn;
+            this.elm = elm;
+            
+            this.btn.addEventListener(`click`,this);
+        }
+        
+        handleEvent(){
+            this.elm.forEach((v,i)=>{
+               v.disabled = !this.btn.checked; 
+            });
+        }
+    }
+    const resize = new Disable(Resize,[size_value,res_value]);
+    
+    
+    const formats = Array.from(document.querySelectorAll(`.formats > li > label > input[type="checkbox"]`));
+    const conditions = Array.from(document.querySelectorAll(`.condition > li > label > input[type="checkbox"]`));
+    console.log(formats);
+    class Collect_element extends Sent_jsx{
+        constructor(){
+            super();
+            this.clauses = {};
+            this.clauses.formats = formats.map(v=>{
+                return {"id":v.id,"checked":v.checked};
+            });
+            this.clauses.conditions = conditions.map(v=>{
+                return {"id":v.id,"checked":v.checked};
+            });
+            this.clauses.Resize = set_clauses(Resize);
+            this.clauses.size_value = set_clauses(size_value);
+            this.clauses.res_value = set_clauses(res_value);
+            this.clauses.jpg_quality = set_clauses(jpg_quality);
+            
+            function set_clauses(o){//nodelist,htmlcollectionだとjson化出来ないのでobjectに変換
+                return {
+                    "id":o.id,
+                    "value":o.value,
+                    "checked":o.checked
+                };
+            }
+            
+            
+        }
+        
+        validate_format(value){
+            return value.every(v => v.checked === false );
+        }
+        
+        exports_layers(){
+            if(this.validate_format(this.clauses.formats)){
+                alert(`you haven't chosen any extension`);
+                return;
+            }
+            
+            const PhotoshopCallbackUnique = make_layer_list;
+		    csInterface.removeEventListener(`com.adobe.PhotoshopJSONCallback`+extensionId,PhotoshopCallbackUnique);
+		    /*==================一時的にレイヤーイベントの停止(レイヤーのon offがリセットされるため)======================*/
+            
+            const json_list = [{"obj_layer":this.prop,"obj_condition":this.clauses}];
+            console.log(json_list);
+            //デバッグ用json書き出し
+            /*
+            fs.writeFile(json_path,JSON.stringify(json_list,null,4),(err)=>{
+                if(err){
+                    alert(err);
+                    return;
+                }
+            });
+            */
+            
+            csInterface.evalScript(`save_layers(${JSON.stringify({"obj_layer":this.prop,
+                                                                  "obj_condition":this.clauses
+                                                                 })})`
+                                                                ,()=>{
+                dispath_event(`com.adobe.PhotoshopRegisterEvent`);//レイヤーイベント再開  
+            });
+            
+        }
+    }
+    document.getElementById(`save_images`).addEventListener(`click`,()=>{
+        const layers_image = new Collect_element();
+        layers_image.exports_layers();
+    });
+    
 }

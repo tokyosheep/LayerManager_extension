@@ -3,219 +3,143 @@
 <head>
 <meta charset="utf-8">
         
-
-<link  id="hostStyle" rel="stylesheet" href="css/styles.css"/>
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet"> 
-
+	<script src="js/libs/CSInterface.js"></script>
+<script defer src="js/dist.js"></script>
 <title>Layer Maneger</title>
 	
-	<style>
-		
-		h2 , h3 , input[type="button"],select{
-			font-size: 15px;
-		}
-		
-		input[type="button"],select{
-			font-family: 'Open Sans Condensed', sans-serif;
-		}
-		
-		h1{
-			font-size: 20px;
-			/*background:linear-gradient(to right,rgba(34, 34, 34, 0),#f7226c);*/ 
-		}
-		
-		h2, h3 {
-			font-size: 18px;
-			color: #858def;
-		}
-		
-		h3{
-			margin-bottom: 5px;
-		}
-		
-		#rorate{
-			display: block;
-			margin-bottom: 10px;
-		}
-		
-		.move{
-			display: block;
-		}
-		
-		form ul{
-			background-color: #27271e;
-			padding: 10px 0px;
-			margin: 20px 0px;
-			border-radius: 10px;
-		}
-		
-		li{
-			list-style: none;
-			margin: 10px 0px;
-			margin-left: 10px;
-		}
-		
-		#layer_list ul{
-			margin: 0px;
-			padding: 0px;
-		}
-		
-		/*=====================layer system===================*/
-		
-		input[type="checkbox"]{
-			display: none;
-		}
-		
-		.layer_box{
-			background-color: #36322d;
-			color: black;
-		}
-		
-		input[type="checkbox"]:checked + span {
-			background-color: #e5753a;
-			color: white;
-		}
-		
-		.folder:checked + .layer_box{
-			background-color: #c3b731;
-		}
-		
-		.text:checked + .layer_box{
-			background-color: #708668;
-		}
-		
-		.adjust:checked + .layer_box{
-			background-color: #2a3589;
-		}
-		
-		.smart:checked + .layer_box{
-			background-color: #666667;
-		}
-		
-		.fillout:checked + .layer_box{
-			background-color: #818169;
-		}
-		
-		.layer_box{
-			border: solid 1px white;
-			border-radius: 3px;
-			padding: 3px  15px;
-		}
-		
-		.layer_name{
-			display: inline-block;
-			margin-left: 3px;
-		}
-		
-		input[type="checkbox"]:disabled + .layer_box{
-			background-color: #36322d;
-			color: black;
-		}
-		
-		
-		
-		/*=====================================================*/
-		
-		input[type="button"]{
-			font-size: 13px;
-			border: solid 0px;
-			padding: 3px 0px;
-			margin: 5px 0px;
-			border-radius: 7px;
-			background-color: #696765;
-			color: white;
-			width: 100%;
-		}
-		
-		#done{
-			background-color: #ef9f33;
-			border: solid 1px #ef9f33;
-		}
-		
-		#load_action{
-			background-color: #484848;
-			border: solid 1px #3a3a8e;
-		}
-		
-		select{
-			width: 100%;
-			margin: 5px 0px;
-			background-color: #221f1d;
-			color: white;
-			font-size: 13px;
-			border-color: #3a3a8e;
-		}
-		
-		#select_type{
-			border-color: #ff8900;
-		}
-		
-		input[type="number"]{
-			background-color: rgba(0,0,0,0);
-			border: none;
-			border-bottom: solid 1px white;
-			color: white;
-			width: 50px;
-		}
-		
-		.position{
-			display: inline-block;
-			width: 65px;
-			height: 18px;
-			margin-right: 5px;
-			font-size: 14px;
-			border-bottom: solid 1px white;
-		}
-		
-		form[name="object_move"]{
-			background-color: #212024;
-			border-radius: 5px;
-			padding: 8px;
-		}
-		
-	</style>
 </head>
 
 <body class="hostElt">
-
+    <h1>Layer Manager</h1>
+    <div id="container">
+       <div id="Layers_panel" class="panels">
+               <form name="layers" > 
+                    <input type="button" id="all_off" value="all check off">
+                    <input type="button" id="all_on" value="all check on">
+               </form>
+               <div class="panels__listframe">
+                   <ul id="layer_list"></ul> 
+                </div>
+        </div>       
+        <div id="options_panel" class="panels">
+                <form name="process" >
+			        <select name="select_type" id="select_type">  
+			        	<option value="action">action</option>
+			        	<option value="smart_on">convert smartlayer</option>
+			        	<option value="smart_off">rasterize layer</option>
+			        	<option value="show_lay">make visible layer</option>
+			        	<option value="hide_lay">make invisible layer</option>
+			        	<option value="rotate">rotate</option>
+			        	<option value="move">move</option>
+			        </select>
+			    <input type="button" id="done" value="done">
+			    </form>
+			    <div class="actions">
+			        <h3>action</h3>
+		            <form name="action">
+		            	<input type="button" name="load_action" id="load_action" value="load">
+		            	<select name="set_list" id="setlist"></select>
+		            	<select name="child_list" id="child_list"></select>
+		            </form>
+			    </div>
+			    <form name="object_move">
+			    <h3>rotate</h3>
+			    <label id="rorate">
+                    <span class="position">
+			            rotate
+			        </span>
+			         <input type="number" max="360" min="-360" step="1" name="rotate" value="0">
+			     </label>
+			    <h3>move</h3>
+			    <label class="move">
+			         <span class="position">
+			            vertical
+			         </span>
+			         <input type="number" name="vertical" value="0">
+			     </label>
+			    <label class="move">
+                    <span class="position">
+                        horizontal
+                    </span>
+                    <input type="number" name="horizontal" value="0">
+                </label>
+		        </form>
+		   
+        </div>
+        <div id="save_options" class="panels">
+            <h2>save Layes</h2>
+            <ul class="formats">
+                <li><label for="jpg">
+                        <input type="checkbox" id="jpg">
+                        <div class="formats__list">jpg</div>
+                    </label></li>
+                <li><label for="tiff">
+                        <input type="checkbox" id="tiff">
+                        <div class="formats__list">tiff</div>
+                    </label></li>
+                <li><label for="png">
+                        <input type="checkbox" id="png">
+                        <div class="formats__list">png</div>
+                    </label></li>
+                <li><label for="gif">
+                        <input type="checkbox" id="gif">
+                        <div class="formats__list">gif</div>
+                    </label></li>
+            </ul>
+            <ul class="condition">
+                <li><label for="each_folder">
+                        <input type="checkbox" id="each_folder">
+                        <div class="condition__option">save each extension's folder</div>
+                    </label></li>
+                <li><label for="crop">
+                        <input type="checkbox" id="crop">
+                        <div class="condition__option">crop each layer's size</div>
+                    </label></li>
+                <li><label for="transparency">
+                        <input type="checkbox" id="transparency">
+                        <div class="condition__option">save transparency</div>
+                    </label></li>
+                <li><label for="sRGB">
+                        <input type="checkbox" id="sRGB">
+                        <div class="condition__option">convert sRGB(jpg)</div>
+                    </label></li>
+            </ul>
+            <table>
+                <tr>
+                    <th>quality(jpg)</th>
+                    <td><input type="number" value="12" id="jpg_quality"></td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="Resize">
+                            <input type="checkbox" id="Resize">
+                            <div class="resize">resize</div>
+                        </label>
+                    </th>
+                    <td>
+                        <label for="size_value">
+                            <input type="number" value="1000" disabled="true" id="size_value">
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        resolution
+                    </th>
+                    <td>
+                        <label for="res_value">
+                            <input type="number" value="72" disabled="true" id="res_value">
+                        </label>
+                    </td>
+                </tr>
+            </table>
+            <button id="save_images">save</button>
+        </div>
+    </div>
+    
+    <!--
     <div id="content">     
-		<h1>Layer Manager</h1>
-		<h3>layer list</h3>
-        <form name="layers" >
-        	<ul id="layer_list">
-			</ul>  
-			<input type="button" id="all_off" value="all check off">
-			<input type="button" id="all_on" value="all check on">
-		</form>
-		
-		<!--
-		<form name="options">
-			<ul id="layer_type">
-				<li><input type="checkbox" name="solid"></li>
-				<li><input type="checkbox" name=""></li>
-			</ul>
-		</form>
-        -->
-		
-		<h3>action</h3>
-		<form name="action">
-			<input type="button" name="load_action" id="load_action" value="load">
-			<select name="set_list" id="setlist"></select>
-			<select name="child_list" id="child_list"></select>
-		</form>
-		
-		<form name="process">
-			<select name="select_type" id="select_type">
-				<option value="action">action</option>
-				<option value="smart_on">convert smartlayer</option>
-				<option value="smart_off">rasterize layer</option>
-				<option value="show_lay">make visible layer</option>
-				<option value="hide_lay">make invisible layer</option>
-				<option value="rotate">rotate</option>
-				<option value="move">move</option>
-			</select>
-		</form>
-		<input type="button" id="done" value="done">
 		
 		<form name="object_move">
 			<h3>rotate</h3>
@@ -225,19 +149,16 @@
 			<label class="move"><span class="position">horizontal</span><input type="number" name="horizontal" value="0"></label>
 		</form>
     </div>
-    
+    -->
     <!-- These are debugging shortcuts.  Class debuglink items only appear in debug mode  -->
     <!--
     <span class="debuglink" id="reload">Reload</span>
     <span class="debuglink" id="debug">Debug</span>
     <span class="debuglink" id="sources">Sources</span>
     -->
-    <script src="js/libs/CSInterface.js"></script>
-    <script src="js/libs/jquery-2.0.2.min.js"></script>
+    
 
-    <script src="js/themeManager.js"></script>
-	<script src="js/prevent_draganddrop.js"></script>
-    <script src="js/main.js"></script>
+    
 
         
 </body>

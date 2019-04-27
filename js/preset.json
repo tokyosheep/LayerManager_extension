@@ -1,0 +1,277 @@
+[
+    {
+        "obj_layer": {
+            "pros_type": "action",
+            "parent_act": "",
+            "child_act": "",
+            "layers": [
+                {
+                    "type": "LayerKind.TEXT",
+                    "name": "action",
+                    "checked": true,
+                    "layers": ""
+                },
+                {
+                    "type": "LayerKind.SOLIDFILL",
+                    "name": "角丸長方形 1",
+                    "checked": true,
+                    "layers": ""
+                },
+                {
+                    "type": "LayerKind.NORMAL",
+                    "name": "レイヤー 1",
+                    "checked": true,
+                    "layers": ""
+                },
+                {
+                    "type": "folder",
+                    "name": "done",
+                    "checked": true,
+                    "layers": [
+                        {
+                            "type": "LayerKind.TEXT",
+                            "name": "Done",
+                            "checked": true,
+                            "layers": ""
+                        },
+                        {
+                            "type": "LayerKind.GRADIENTFILL",
+                            "name": "長方形 3",
+                            "checked": true,
+                            "layers": ""
+                        }
+                    ]
+                },
+                {
+                    "type": "folder",
+                    "name": "グループ 3",
+                    "checked": true,
+                    "layers": []
+                },
+                {
+                    "type": "folder",
+                    "name": "on のコピー",
+                    "checked": true,
+                    "layers": [
+                        {
+                            "type": "LayerKind.TEXT",
+                            "name": "off",
+                            "checked": true,
+                            "layers": ""
+                        },
+                        {
+                            "type": "LayerKind.SOLIDFILL",
+                            "name": "長方形 4",
+                            "checked": true,
+                            "layers": ""
+                        }
+                    ]
+                },
+                {
+                    "type": "folder",
+                    "name": "on",
+                    "checked": true,
+                    "layers": [
+                        {
+                            "type": "LayerKind.TEXT",
+                            "name": "on",
+                            "checked": true,
+                            "layers": ""
+                        },
+                        {
+                            "type": "LayerKind.LEVELS",
+                            "name": "レベル補正 1",
+                            "checked": true,
+                            "layers": ""
+                        },
+                        {
+                            "type": "LayerKind.SMARTOBJECT",
+                            "name": "長方形 4 のコピー",
+                            "checked": true,
+                            "layers": ""
+                        }
+                    ]
+                },
+                {
+                    "type": "LayerKind.TEXT",
+                    "name": "rotate",
+                    "checked": true,
+                    "layers": ""
+                },
+                {
+                    "type": "LayerKind.TEXT",
+                    "name": "Layer list",
+                    "checked": true,
+                    "layers": ""
+                },
+                {
+                    "type": "folder",
+                    "name": "action",
+                    "checked": true,
+                    "layers": [
+                        {
+                            "type": "LayerKind.TEXT",
+                            "name": "action",
+                            "checked": true,
+                            "layers": ""
+                        },
+                        {
+                            "type": "folder",
+                            "name": "グループ 2 のコピー",
+                            "checked": true,
+                            "layers": [
+                                {
+                                    "type": "LayerKind.TEXT",
+                                    "name": "action folder",
+                                    "checked": true,
+                                    "layers": ""
+                                },
+                                {
+                                    "type": "LayerKind.SOLIDFILL",
+                                    "name": "長方形 2",
+                                    "checked": true,
+                                    "layers": ""
+                                }
+                            ]
+                        },
+                        {
+                            "type": "folder",
+                            "name": "グループ 2",
+                            "checked": true,
+                            "layers": [
+                                {
+                                    "type": "LayerKind.TEXT",
+                                    "name": "action folder",
+                                    "checked": true,
+                                    "layers": ""
+                                },
+                                {
+                                    "type": "LayerKind.SOLIDFILL",
+                                    "name": "長方形 2",
+                                    "checked": true,
+                                    "layers": ""
+                                }
+                            ]
+                        },
+                        {
+                            "type": "folder",
+                            "name": "グループ 1",
+                            "checked": true,
+                            "layers": [
+                                {
+                                    "type": "LayerKind.TEXT",
+                                    "name": "Load",
+                                    "checked": true,
+                                    "layers": ""
+                                },
+                                {
+                                    "type": "LayerKind.GRADIENTFILL",
+                                    "name": "長方形 1",
+                                    "checked": true,
+                                    "layers": ""
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "LayerKind.TEXT",
+                    "name": "Layer Manager",
+                    "checked": true,
+                    "layers": ""
+                },
+                {
+                    "type": "LayerKind.NORMAL",
+                    "name": "レイヤー 2",
+                    "checked": true,
+                    "layers": ""
+                },
+                {
+                    "type": "LayerKind.TEXT",
+                    "name": "degree",
+                    "checked": true,
+                    "layers": ""
+                },
+                {
+                    "type": "LayerKind.NORMAL",
+                    "name": "レイヤー 4",
+                    "checked": true,
+                    "layers": ""
+                },
+                {
+                    "type": "LayerKind.SMARTOBJECT",
+                    "name": "レイヤー 3",
+                    "checked": true,
+                    "layers": ""
+                },
+                {
+                    "type": "LayerKind.NORMAL",
+                    "name": "背景",
+                    "checked": true,
+                    "layers": ""
+                }
+            ],
+            "rotate": 0,
+            "vertical": 0,
+            "horizontal": 0
+        },
+        "obj_condition": {
+            "formats": [
+                {
+                    "id": "jpg",
+                    "checked": true
+                },
+                {
+                    "id": "tiff",
+                    "checked": false
+                },
+                {
+                    "id": "png",
+                    "checked": false
+                },
+                {
+                    "id": "gif",
+                    "checked": false
+                }
+            ],
+            "conditions": [
+                {
+                    "id": "each_folder",
+                    "checked": true
+                },
+                {
+                    "id": "crop",
+                    "checked": false
+                },
+                {
+                    "id": "transparency",
+                    "checked": true
+                },
+                {
+                    "id": "sRGB",
+                    "checked": false
+                }
+            ],
+            "Resize": {
+                "id": "Resize",
+                "value": "on",
+                "checked": false
+            },
+            "size_value": {
+                "id": "size_value",
+                "value": "1000",
+                "checked": false
+            },
+            "res_value": {
+                "id": "res_value",
+                "value": "72",
+                "checked": false
+            },
+            "jpg_quality": {
+                "id": "jpg_quality",
+                "value": "12",
+                "checked": false
+            }
+        }
+    }
+]
